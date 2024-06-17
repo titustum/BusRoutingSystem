@@ -1,11 +1,10 @@
-name: Build and deploy
+name: Build
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
 
 jobs:
     build:
@@ -30,6 +29,5 @@ jobs:
                   username: ${{ secrets.FTP_USERNAME }}
                   password: ${{ secrets.FTP_PASSWORD }}
                   local-dir: './'  # Adjust if your Laravel app is in a subdirectory
-                  server-dir: '/public_html/'  # Change to your desired target directory
+                  server-dir: '/schoolbusapp.webesi.co.ke/'  # Change to your desired target directory
                   method: 'ftp'
-
