@@ -2,7 +2,7 @@
 
     <div class="h-screen w-full  flex flex-col p-4">
         <div class="py-10 flex-grow">
-            <h1 class="text-orange-600 text-2xl text-center font-bold font-['Righteous']">School Bus Routing System</h1>
+            <h1 class="text-orange-600 uppercase text-2xl text-center font-bold font-['Righteous']">School Bus Routing System</h1>
 
             <p class="mt-5 text-zinc-900">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt autem obcaecati consequatur tempore laboriosam possimus necessitatibus ipsam voluptatum, fugiat saepe perspiciatis odio quas quos aperiam sapiente iure beatae molestiae voluptatem.</p>
 
@@ -10,7 +10,7 @@
             <img src="{{ asset('images/shoolbus.jpg') }}" alt="School Bus" class="mt-6">
 
         </div>
-        <div class="shrink-0 grid gap-2">
+        <div class="shrink-0 grid gap-2 mb-4">
             <a href="{{ route('login') }}" class="w-[90%] block text-center mx-auto py-3 px-6 bg-black rounded-md text-white hover:opacity-80">
                 Login
             </a>
