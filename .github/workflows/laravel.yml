@@ -18,13 +18,10 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.2'
-
-            - name: Speed up the packages installation process
-              run: composer global require hirak/prestissimo
+                  php-version: '8.2'  # Update to PHP 8.2
 
             - name: Install Packages
-              run: composer install --no-dev
+              run: composer install --no-dev  # Remove `prestissimo`
 
             - name: Deploy to cPanel via FTP
               uses: SamKirkland/FTP-Deploy-Action@4.3.0
@@ -32,7 +29,7 @@ jobs:
                   server: ${{ secrets.FTP_SERVER }}
                   username: ${{ secrets.FTP_USERNAME }}
                   password: ${{ secrets.FTP_PASSWORD }}
-                  local-dir: './'  # Adjust this if your Laravel app is in a subdirectory
-                  server-dir: '/schoolbusapp.webesi.co.ke/'  # Change to your desired target directory
+                  local-dir: './'  # Adjust if your Laravel app is in a subdirectory
+                  server-dir: '/public_html/'  # Change to your desired target directory
                   method: 'ftp'
 
