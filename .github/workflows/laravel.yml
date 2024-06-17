@@ -29,5 +29,5 @@ jobs:
                   username: ${{ secrets.FTP_USERNAME }}
                   password: ${{ secrets.FTP_PASSWORD }}
                   local-dir: './'  # Adjust if your Laravel app is in a subdirectory
-                  server-dir: '/'  # Change to your desired target directory
+                  server-dir: './'  # Change to your desired target directory
                   method: 'ftp'
