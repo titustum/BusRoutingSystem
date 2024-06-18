@@ -1,3 +1,6 @@
+@props(["header"])
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -24,6 +27,21 @@
         {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     </head>
     <body class="font-sans antialiased">
+
+        @isset($header)
+        
+        <nav class="py-3 border-b bg-white px-3 flex items-center justify-between shadow-md fixed top-0 w-full">
+            <a href="/">
+                <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+            </a>
+
+            {{-- <div class="text-orange-600 uppercase font-['Righteous']">{{ $header }}</div> --}}
+
+            <a href="{{ route('profile.edit') }}">
+               <i class="fas fa-2x fa-user-circle"></i>
+            </a>
+        </nav>
+        @endisset
             {{ $slot }}
     </body>
 </html>
