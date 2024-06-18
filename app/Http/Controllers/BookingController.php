@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Travel;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
-class TravelController extends Controller
+class BookingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class TravelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Travel $travel)
+    public function show(Booking $booking)
     {
         //
     }
@@ -42,7 +42,7 @@ class TravelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Travel $travel)
+    public function edit(Booking $booking)
     {
         //
     }
@@ -50,7 +50,7 @@ class TravelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Travel $travel)
+    public function update(Request $request, Booking $booking)
     {
         //
     }
@@ -58,7 +58,7 @@ class TravelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Travel $travel)
+    public function destroy(Booking $booking)
     {
         //
     }

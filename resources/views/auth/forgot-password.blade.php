@@ -1,4 +1,4 @@
-<x-mobile-layout>
+<x-app-layout>
 
     <div class="flex flex-col justify-center min-h-screen">
 
@@ -38,4 +38,4 @@
         </div>
     </div>
 
-</x-mobile-layout>
+</x-app-layout>

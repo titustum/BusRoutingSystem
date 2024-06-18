@@ -1,15 +1,15 @@
-<x-mobile-layout header="smart">
+<x-app-layout header="smart">
 
 
-    <div class="py-12 mt-10 px-3">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="py-12 mt-10 px-6">
+        <div class="">
             <div class="p-4 sm:p-8 bg-white shadow border rounded-md">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow border rounded-md">
+            <div class="p-4 mt-4 sm:p-8 bg-white shadow border rounded-md">
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
                 </div>
@@ -27,4 +27,4 @@
             </form>
         </div>
     </div>
-</x-mobile-layout>
+</x-app-layout>

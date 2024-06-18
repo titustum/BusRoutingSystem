@@ -1,4 +1,4 @@
-<x-mobile-layout>
+<x-app-layout>
 
     <div class="flex flex-col justify-center min-h-screen">
         <form method="POST" action="{{ route('register') }}" class="w-[90%] mx-auto border shadow shadow-orange-600 px-4 py-6 rounded">
@@ -27,12 +27,12 @@
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-input-label for="usertype" :value="__('Select category')" />
-                <select id="usertype" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="usertype" :value="old('usertype')" required />
+                <x-input-label for="role" :value="__('Select category')" />
+                <select id="role" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="role" :value="old('role')" required />
                     <option>Passenger</option>
                     <option>Driver</option>
                 </select>
-                <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
+                <x-input-error :messages="$errors->get('role')" class="mt-2" />
             </div>
 
             <!-- Password -->
@@ -72,7 +72,7 @@
 
 
 
-</x-mobile-layout>
+</x-app-layout>
 
 
 

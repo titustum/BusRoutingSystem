@@ -2,14 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\UserTypeMiddleware;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    // dd(strtoupper(Auth::user()->usertype));
+    if (Auth::check() && strcasecmp(Auth::user()->role, 'PASSENGER') === 0) {
+        return view('passenger.dashboard');
+    }
+    return view('driver.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
