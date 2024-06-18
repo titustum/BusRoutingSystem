@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\JourneyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +26,10 @@ Route::middleware('auth')->group(function () {
     //specific routes
     Route::get('/passenger/dashboard', function () { return view('passenger.dashboard'); })->name('passenger.dashboard');
     Route::get('/driver/dashboard', function () { return view('driver.dashboard'); })->name('driver.dashboard');
+
+    Route::resource('journeys', JourneyController::class);
+    Route::resource('bookings', BookingController::class);
+
 });
 
 

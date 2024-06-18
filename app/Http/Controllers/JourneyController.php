@@ -20,7 +20,7 @@ class JourneyController extends Controller
      */
     public function create()
     {
-        //
+        return view('journey.create');
     }
 
     /**
