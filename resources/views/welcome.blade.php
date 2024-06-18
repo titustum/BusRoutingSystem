@@ -1,13 +1,16 @@
 <x-mobile-layout>
 
     <div class="h-screen w-full  flex flex-col p-4">
-        <div class="py-10 flex-grow">
-            <h1 class="text-orange-600 uppercase text-2xl text-center font-bold font-['Righteous']">School Bus Routing System</h1>
+        <div class="mt-6 flex-grow">
+            <h1 class="text-orange-600 uppercase text-2xl text-center font-bold font-['Righteous']">School Bus Booking</h1>
 
-            <p class="mt-5 text-zinc-900">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt autem obcaecati consequatur tempore laboriosam possimus necessitatibus ipsam voluptatum, fugiat saepe perspiciatis odio quas quos aperiam sapiente iure beatae molestiae voluptatem.</p>
+            <p class="mt-5 text-zinc-900 w-[90%] mx-auto">
+                This is a bus trackig  routing system that lets passengers
+                especially students to book tickets and
+                pay for the seats prior to the time of travel.
+            </p>
 
-
-            <img src="{{ asset('images/shoolbus.jpg') }}" alt="School Bus" class="mt-6">
+            <img src="{{ asset('images/school bus routing.webp') }}" alt="School Bus" class="mt-6">
 
         </div>
         <div class="shrink-0 grid gap-2 mb-4">
