@@ -10,7 +10,7 @@ class Journey extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'origin', 'destination', 'departure_time', 'price', 'seats_available'
+        'user_id', 'origin', 'destination', 'departure_date','departure_time', 'price', 'seats_available'
     ];
 
     public function driver()

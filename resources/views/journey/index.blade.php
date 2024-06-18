@@ -26,7 +26,7 @@
                          </div>
                          <div class="col-span-2">
                              <div>Route: Nairobi to Mombasa</div>
-                             <div>Start Time: 10:30 AM</div>
+                             <div>Departure: 10:30 AM</div>
                              <div>Ticket Price: KES 2,000</div>
                              <button type="submit"
                                  class="w-full text-sm block text-center mx-auto py-2 px-2 bg-black rounded-md text-white hover:opacity-80 focus:opacity-80">

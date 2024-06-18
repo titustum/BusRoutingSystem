@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->string('origin');
             $table->string('destination');
-            $table->dateTime('departure_time');
+            $table->date('departure_date');
+            $table->time('departure_time');
             $table->integer('price');
             $table->integer('seats_available');
             $table->timestamps();

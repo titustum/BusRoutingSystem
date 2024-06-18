@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Journey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JourneyController extends Controller
 {
@@ -12,7 +13,7 @@ class JourneyController extends Controller
      */
     public function index()
     {
-        //
+        return view('journey.index');
     }
 
     /**
@@ -28,7 +29,8 @@ class JourneyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Auth::user()->journeys()->create($request->all());
+        return back()->with('status', 'Journey created successfully!');
     }
 
     /**
