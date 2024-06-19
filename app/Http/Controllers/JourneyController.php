@@ -41,6 +41,17 @@ class JourneyController extends Controller
         //
     }
 
+
+    public function search(Request $request)
+    {
+        $journeys = Journey::where('origin', $request->origin)
+                            ->where('destination', $request->destination)
+                            ->get();
+
+        // dd($journeys);
+        return view('journey.search', compact('journeys'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -64,4 +75,6 @@ class JourneyController extends Controller
     {
         //
     }
+
+
 }

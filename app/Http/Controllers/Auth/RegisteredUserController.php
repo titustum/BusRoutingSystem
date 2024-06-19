@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'usertype' => $request->role,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
@@ -47,12 +47,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // return redirect(route('dashboard', absolute: false));
-
-        if (Auth::user()->usertype == "passenger") {
-            return redirect()->route('passenger.dashboard');
-        }else{
-            return redirect()->route('driver.dashboard');
-        }
+        return redirect(route('dashboard', absolute: false));
     }
 }

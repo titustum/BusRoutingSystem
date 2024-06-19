@@ -22,7 +22,7 @@
                         <div class="mt-2">My Journeys</div>
                     </div>
                 </a>
-                <a href="{{ route('bookings.index') }}" class="min-h-[20vh] hover:bg-orange-200 transition-all duration-300 focus:bg-orange-200 border rounded-md shadow shadow-orange-600 flex flex-col justify-center">
+                <a href="#" class="min-h-[20vh] hover:bg-orange-200 transition-all duration-300 focus:bg-orange-200 border rounded-md shadow shadow-orange-600 flex flex-col justify-center">
                     <div class="text-center">
                         <i class="fas fa-check fa-2xl"></i>
                         <div class="mt-2">Bookings</div>

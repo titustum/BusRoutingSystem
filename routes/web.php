@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\JourneyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -10,13 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    // dd(strtoupper(Auth::user()->usertype));
-    if (Auth::check() && strcasecmp(Auth::user()->role, 'PASSENGER') === 0) {
-        return view('passenger.dashboard');
-    }
-    return view('driver.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,6 +24,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('journeys', JourneyController::class);
     Route::resource('bookings', BookingController::class);
+
+    Route::post('journeys/search', [JourneyController::class, 'search'])->name('journeys.search');
 
 });
 

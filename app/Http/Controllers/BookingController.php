@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -28,7 +29,10 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Auth::user()->bookings->create($request->all());
+
+        Booking::create($request->all());
+        return redirect()->route('dashboard')->with('status', 'Booked successfully!');
     }
 
     /**

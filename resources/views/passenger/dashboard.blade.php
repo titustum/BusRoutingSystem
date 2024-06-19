@@ -6,11 +6,12 @@
             Passenger Dashboard
         </div>
 
-        <form>
+        <form method="POST" action="{{ route('journeys.search') }}">
+            @csrf
             <!-- destination -->
             <div class="mt-4">
-                <x-input-label for="usertype" :value="__('Select your location')" />
-                <select id="usertype" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="usertype" :value="old('usertype')" required />
+                <x-input-label for="origin" :value="__('Select your location')" />
+                <select id="origin" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="origin" :value="old('origin')" required />
                     <option>Mombasa</option>
                     <option>Nairobi</option>
                     <option>Bungoma</option>
@@ -18,20 +19,20 @@
                     <option>Eldoret</option>
                     <option>Nyeri</option>
                 </select>
-                <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
+                <x-input-error :messages="$errors->get('origin')" class="mt-2" />
             </div>
 
             <!-- destination -->
             <div class="mt-4">
-                <x-input-label for="usertype" :value="__('Select destnation')" />
-                <select id="usertype" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="usertype" :value="old('usertype')" required />
+                <x-input-label for="destination" :value="__('Select destination')" />
+                <select id="destination" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="destination" :value="old('destination')" required />
                     <option>Nairobi</option>
                     <option>Mombasa</option>
                     <option>Kisumu</option>
                     <option>Eldoret</option>
                     <option>Nyeri</option>
                 </select>
-                <x-input-error :messages="$errors->get('usertype')" class="mt-2" />
+                <x-input-error :messages="$errors->get('destination')" class="mt-2" />
 
             </div>
             <button type="submit" class="w-full mt-6 block text-center mx-auto py-3 px-6 bg-black rounded-md text-white hover:opacity-80 focus:opacity-80">
@@ -47,28 +48,35 @@
 
             <div class="grid gap-3 mt-4">
 
-                @for ($i=0; $i<6; $i++)
+
+                @foreach ($journeys as $journey)
 
                 <div class="border shadow p-3 rounded-md grid gap-3 grid-cols-3">
-                    <div>
+                   <div>
 
-                        <div class="flex flex-col text-center justify-center h-[90%] w-full bg-gray-200 rounded-md">
-                            <i class="fas fa-bus text-orange-600"></i>
-                            <h1 class="font-bold">Bus Kenya</h1>
-                        </div>
-                    </div>
-                    <div class="col-span-2">
-                        <div>Route: Nairobi to Mombasa</div>
-                        <div>Start Time: 10:30 AM</div>
-                        <div>Ticket Price: KES 2,000</div>
-                        <button type="submit"
-                            class="w-full text-sm block text-center mx-auto py-2 px-2 bg-black rounded-md text-white hover:bg-orange-600 focus:bg-orange-600">
+                       <div class="flex flex-col text-center justify-center h-[90%] w-full bg-gray-200 rounded-md">
+                           <i class="fas fa-bus text-orange-600"></i>
+                           <h1 class="font-bold">Bus Kenya</h1>
+                       </div>
+                   </div>
+                   <div class="col-span-2 text-sm">
+                       <div>Route: {{ $journey->origin }} to {{ $journey->destination }}</div>
+                       <div>Start Time: {{ $journey->departure_time }}</div>
+                       <div>Ticket Price: <b>KSh. {{ number_format($journey->price) }}</b></div>
+                       <form method="POST" action="{{ route('bookings.store') }}">
+                           @csrf
+                           <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                           <input type="hidden" name="journey_id" value="{{ $journey->id }}">
+                           <button type="submit"
+                               class="w-full block text-center mx-auto py-2 px-2 bg-black rounded-md text-white hover:bg-orange-600 focus:bg-orange-600">
                            Book Now
-                        </button>
-                    </div>
-                </div>
+                           </button>
+                       </form>
 
-                @endfor
+                   </div>
+               </div>
+
+                @endforeach
 
             </div>
 
