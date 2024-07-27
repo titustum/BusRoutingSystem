@@ -29,8 +29,21 @@ class JourneyController extends Controller
      */
     public function store(Request $request)
     {
-        Auth::user()->journeys()->create($request->all());
-        return back()->with('status', 'Journey created successfully!');
+        $validated = $request->validate([
+            'origin' => 'required|string',
+            'destination' => 'required|string',
+            'origin_coordinates' => 'required|string',
+            'destination_coordinates' => 'required|string',
+            'price' => 'required|numeric',
+            'departure_date' => 'required|date',
+            'departure_time' => 'required',
+        ]);
+
+        $journey = new Journey($validated);
+        $journey->user_id = auth()->id(); // Assuming the logged-in user is the driver
+        $journey->save();
+
+        return redirect()->route('journeys.index')->with('success', 'Journey created successfully.');
     }
 
     /**

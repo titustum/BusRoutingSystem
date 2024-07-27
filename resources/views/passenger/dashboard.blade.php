@@ -3,7 +3,7 @@
     <div class="flex flex-col w-full h-screen p-4 pb-6 mt-16">
 
         <div class="text-orange-600 text-xl text-center uppercase font-['Righteous']">
-            Passenger Dashboard
+            Parent Dashboard
         </div>
 
         <form method="POST" action="{{ route('journeys.search') }}">
@@ -63,7 +63,7 @@
                        <div>Route: {{ $journey->origin }} to {{ $journey->destination }}</div>
                        <div>Start Time: {{ $journey->departure_time }}</div>
                        <div>Ticket Price: <b>KSh. {{ number_format($journey->price) }}</b></div>
-                       <a href="{{ route('journeys.show', $journey ) }}" class="text-blue-600">
+                       <a href="{{ route('journeys.show', $journey) }}" class="text-blue-600">
                         More Details <i class="fas fa-arrow-right"></i>
                         </a>
 

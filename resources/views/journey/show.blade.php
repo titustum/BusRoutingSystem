@@ -31,25 +31,29 @@
                     </div>
                     <div class="detail-item">
                         <strong>Driver:</strong>
-                        <span id="distance">James Mwangi</span>
+                        <span id="distance">{{ $journey->driver }}</span>
                     </div>
                     <div class="detail-item">
                         <strong>Bus Number:</strong>
                         <span id="distance">KCA7867X</span>
                     </div>
-                    <div class="detail-item">
+
+                    <div id="info"></div>
+
+                    {{-- <div class="detail-item">
                         <strong>Distance:</strong>
-                        <span id="distance">480 km</span>
+                        <span id="distance">{{ $journey->distance }}</span>
                     </div>
                     <div class="detail-item">
                         <strong>Estimated Time:</strong>
-                        <span id="estimated-time">8 hours</span>
-                    </div>
+                        <span id="estimated-time">{{ $journey->estimated_time }}</span>
+                    </div> --}}
                 </div>
 
                 <div id="map" class="min-h-[300px] rounded-md"></div>
 
              </div>
+
 
 
              <div class="mt-auto">
@@ -63,56 +67,47 @@
 
 
 
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js'></script>
-    <script>
-        // Replace 'your_mapbox_access_token' with your actual Mapbox access token
-        mapboxgl.accessToken = "{{ env('MAPBOX_KEY') }}";
 
-        // Initialize the map
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v12', // style URL
-            center: [39.6682, -3.0565], // starting position [lng, lat]
-            zoom: 5 // starting zoom
-        });
+     <script>
+         // Define the initMap function globally
+         function initMap() {
+             var directionsService = new google.maps.DirectionsService();
+             var directionsRenderer = new google.maps.DirectionsRenderer();
+             var map = new google.maps.Map(document.getElementById('map'), {
+                 zoom: 7,
+                 center: {lat: 0, lng: 0}
+             });
+             directionsRenderer.setMap(map);
 
-        // Add map controls
-        map.addControl(new mapboxgl.NavigationControl());
+             var originCoords = "{{ $journey->origin_coordinates }}".split(',');
+             var destCoords = "{{ $journey->destination_coordinates }}".split(',');
 
-        // Coordinates for the journey from Mombasa to Nairobi
-        var route = [
-            [39.6682, -4.0435], // Mombasa
-            [36.8219, -1.2921]  // Nairobi
-        ];
+             var request = {
+                 origin: new google.maps.LatLng(parseFloat(originCoords[0]), parseFloat(originCoords[1])),
+                 destination: new google.maps.LatLng(parseFloat(destCoords[0]), parseFloat(destCoords[1])),
+                 travelMode: 'DRIVING'
+             };
 
-        // Add the route to the map
-        map.on('load', function () {
-            map.addSource('route', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': route
-                    }
-                }
-            });
+             directionsService.route(request, function(result, status) {
+                 if (status === 'OK') {
+                     directionsRenderer.setDirections(result);
 
-            map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#ff0000',
-                    'line-width': 4
-                }
-            });
-        });
-    </script>
+                     var route = result.routes[0];
+                     var leg = route.legs[0];
+
+                     // Display distance and duration
+                     document.getElementById('info').innerHTML = '<b>Distance:</b> ' + leg.distance.text + '<br><b>Duration:</b> ' + leg.duration.text;
+                 } else {
+                     console.error('Directions request failed due to ' + status);
+                     document.getElementById('info').innerHTML = 'Unable to calculate directions.';
+                 }
+             });
+         }
+     </script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&callback=initMap" async defer></script>
+
+
 
  </x-app-layout>
