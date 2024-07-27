@@ -1,6 +1,6 @@
 <x-app-layout header="Passenger">
 
-    <div class="h-screen w-full mt-16 pb-6 flex flex-col p-4">
+    <div class="flex flex-col w-full h-screen p-4 pb-6 mt-16">
 
         <div class="text-orange-600 text-xl text-center uppercase font-['Righteous']">
             Passenger Dashboard
@@ -11,7 +11,7 @@
             <!-- destination -->
             <div class="mt-4">
                 <x-input-label for="origin" :value="__('Select your location')" />
-                <select id="origin" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="origin" :value="old('origin')" required />
+                <select id="origin" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" name="origin" :value="old('origin')" required />
                     <option>Mombasa</option>
                     <option>Nairobi</option>
                     <option>Bungoma</option>
@@ -25,7 +25,7 @@
             <!-- destination -->
             <div class="mt-4">
                 <x-input-label for="destination" :value="__('Select destination')" />
-                <select id="destination" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" name="destination" :value="old('destination')" required />
+                <select id="destination" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" name="destination" :value="old('destination')" required />
                     <option>Nairobi</option>
                     <option>Mombasa</option>
                     <option>Kisumu</option>
@@ -35,7 +35,7 @@
                 <x-input-error :messages="$errors->get('destination')" class="mt-2" />
 
             </div>
-            <button type="submit" class="w-full mt-6 block text-center mx-auto py-3 px-6 bg-black rounded-md text-white hover:opacity-80 focus:opacity-80">
+            <button type="submit" class="block w-full px-6 py-3 mx-auto mt-6 text-center text-white bg-black rounded-md hover:opacity-80 focus:opacity-80">
                <i  class="fa fa-search"></i> Find Buses
             </button>
         </form>
@@ -51,11 +51,11 @@
 
                 @foreach ($journeys as $journey)
 
-                <div class="border shadow p-3 rounded-md grid gap-3 grid-cols-3">
+                <div class="grid grid-cols-3 gap-3 p-3 border rounded-md shadow">
                    <div>
 
                        <div class="flex flex-col text-center justify-center h-[90%] w-full bg-gray-200 rounded-md">
-                           <i class="fas fa-bus text-orange-600"></i>
+                           <i class="text-orange-600 fas fa-bus"></i>
                            <h1 class="font-bold">Bus Kenya</h1>
                        </div>
                    </div>
@@ -63,15 +63,9 @@
                        <div>Route: {{ $journey->origin }} to {{ $journey->destination }}</div>
                        <div>Start Time: {{ $journey->departure_time }}</div>
                        <div>Ticket Price: <b>KSh. {{ number_format($journey->price) }}</b></div>
-                       <form method="POST" action="{{ route('bookings.store') }}">
-                           @csrf
-                           <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                           <input type="hidden" name="journey_id" value="{{ $journey->id }}">
-                           <button type="submit"
-                               class="w-full block text-center mx-auto py-2 px-2 bg-black rounded-md text-white hover:bg-orange-600 focus:bg-orange-600">
-                           Book Now
-                           </button>
-                       </form>
+                       <a href="{{ route('journeys.show', $journey ) }}" class="text-blue-600">
+                        More Details <i class="fas fa-arrow-right"></i>
+                        </a>
 
                    </div>
                </div>

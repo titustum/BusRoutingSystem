@@ -19,21 +19,22 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <link rel="stylesheet" href="{{ asset('build/assets/app-bJNOHcVv.css') }}">
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.js"></script>
+        <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css" type="text/css">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('build/assets/app-CHEKssRy.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/assets/app-Dn-Q7aVK.css') }}">
     </head>
     <body class="font-sans antialiased">
 
         <div class="max-w-lg mx-auto border-x">
             @isset($header)
 
-            <nav class="py-1 border-b bg-white px-6 flex items-center justify-between fixed top-0 w-full max-w-lg">
+            <nav class="fixed top-0 flex items-center justify-between w-full max-w-lg px-6 py-1 bg-white border-b">
                 <a href="{{ route('dashboard') }}">
-                    <x-application-logo class="block h-10 w-auto fill-current text-gray-800" />
+                    <x-application-logo class="block w-auto h-10 text-gray-800 fill-current" />
                 </a>
 
                 <a href="{{ route('profile.edit') }}">
