@@ -42,6 +42,10 @@ class Journey extends Model
         return $this->departure_date->setTimeFromTimeString($this->departure_time);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
     public function bookings()
     {
         return $this->hasMany(Booking::class);

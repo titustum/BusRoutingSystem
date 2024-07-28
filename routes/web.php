@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/passenger/store', [PassengerController::class, 'storeDetails'])->name('passenger.store');
     Route::post('/driver/store', [DriverController::class, 'storeDetails'])->name('driver.store');
+    Route::get('/driver/bookings', [DriverController::class, 'viewBookings'])->name('driver.view.bookings');
+    Route::get('/driver/booking/{id}', [DriverController::class, 'showBooking'])->name('driver.show.booking');
 
 });
 
