@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -47,6 +47,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        if (Auth::check() && strcasecmp(Auth::user()->role, 'DRIVER') === 0) {
+            return view('driver.create');
+        }
+        return view('passenger.create');
+
+        // return redirect(route('dashboard', absolute: false));
     }
 }

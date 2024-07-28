@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Journey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class JourneyController extends Controller
 {
@@ -49,9 +50,36 @@ class JourneyController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(Journey $journey)
     {
-        return view('journey.show', compact('journey'));
+        $originCoords = explode(',', $journey->origin_coordinates);
+        $destCoords = explode(',', $journey->destination_coordinates);
+
+        $apiKey = config('services.google.maps_api_key'); // Store your API key in config
+
+        $mapUrl = "https://maps.googleapis.com/maps/api/staticmap?" . http_build_query([
+            'size' => '600x400',
+            'markers' => "color:red|label:A|{$journey->origin_coordinates}|" .
+                        "color:red|label:B|{$journey->destination_coordinates}",
+            'path' => "color:0x0000ff|weight:5|{$journey->origin_coordinates}|{$journey->destination_coordinates}",
+            'key' => env('GOOGLE_MAPS_KEY')
+        ]);
+
+        // Fetch directions data
+        $directionsUrl = "https://maps.googleapis.com/maps/api/directions/json?" . http_build_query([
+            'origin' => $journey->origin_coordinates,
+            'destination' => $journey->destination_coordinates,
+            'key' => $apiKey
+        ]);
+
+        $directionsResponse = Http::get($directionsUrl);
+        $directionsData = $directionsResponse->json();
+
+        $distance = $directionsData['routes'][0]['legs'][0]['distance']['text'] ?? 'Unknown';
+        $duration = $directionsData['routes'][0]['legs'][0]['duration']['text'] ?? 'Unknown';
+
+        return view('journey.show', compact('journey', 'mapUrl', 'distance', 'duration'));
     }
 
 

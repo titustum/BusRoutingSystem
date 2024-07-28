@@ -15,9 +15,12 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('mobile_number');
+            $table->foreignId('journey_id')->constrained();
+            $table->integer('amount');
+            $table->string('phone_number');
             $table->string('transaction_code');
-            $table->decimal('amount', 10, 2);
+            $table->string('mpesa_receipt_number')->nullable();
+            $table->enum('status', ['pending', 'completed', 'failed']);
             $table->timestamps();
         });
     }

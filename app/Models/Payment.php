@@ -11,13 +11,20 @@ class Payment extends Model
 
     protected $fillable = [
         'user_id',
-        'mobile_number',
+        'journey_id',
+        'phone_number',
         'transaction_code',
+        'mpesa_receipt_number',
         'amount',
+        'status',
     ];
 
-    public function user()
+    public function customer()
     {
         return $this->belongsTo(User::class);
+    }
+    public function journey()
+    {
+        return $this->belongsTo(Journey::class);
     }
 }

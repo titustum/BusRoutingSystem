@@ -1,0 +1,19 @@
+POST https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+
+Key: Authorization
+Value: Bearer K8AWzhFk5YynG6kaeYv3D5faJycS
+
+body
+{
+"BusinessShortCode": 174379,
+"Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNzI4MTgwOTQ0",
+"Timestamp": "20240728180944",
+"TransactionType": "CustomerPayBillOnline",
+"Amount": 1,
+"PartyA": 254708374149,
+"PartyB": 174379,
+"PhoneNumber": 2547888255524,
+"CallBackURL": "https://mydomain.com/path",
+"AccountReference": "CompanyXLTD",
+"TransactionDesc": "Payment of X"
+}

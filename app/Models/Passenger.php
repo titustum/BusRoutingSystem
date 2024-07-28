@@ -15,4 +15,9 @@ class Passenger extends Model
         'child_age',
         'child_school',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
