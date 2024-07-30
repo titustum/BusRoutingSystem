@@ -43,13 +43,14 @@
                                 <i class="text-orange-600 fas fa-bus"></i>
                                 @if ($journey->driver)
                                     <h1 class="font-bold">{{ $journey->driver->company_name }}</h1>
+                                    <h1 class="text-sm">{{ $journey->driver->vehicle_number }}</h1>
                                 @else
                                     <h1 class="font-bold">Bus Kenya</h1>
                                 @endif
                             </div>
                         </div>
                         <div class="col-span-2 text-sm">
-                            <div>Route: {{ $journey->origin }} to {{ $journey->destination }}</div>
+                            <div>Route: <b>{{ $journey->origin }} to {{ $journey->destination }}</b></div>
                             <div>Start Time: {{ $journey->departure_time }}</div>
                             <div>Ticket Price: <b>KSh. {{ number_format($journey->price) }}</b></div>
                             <a href="{{ route('journeys.show', $journey) }}" class="text-blue-600">

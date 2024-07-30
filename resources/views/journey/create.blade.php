@@ -29,12 +29,12 @@
                 <!-- Hidden Destination Coordinates -->
                 <input type="hidden" id="destination_coordinates" name="destination_coordinates" value="{{ old('destination_coordinates') }}" />
 
-                <!-- Price -->
-                <div>
-                    <x-input-label for="price" :value="__('Price (KSh)')" />
-                    <x-text-input id="price" class="block w-full mt-1" type="number" name="price" :value="old('price')" required />
-                    <x-input-error :messages="$errors->get('price')" class="mt-2" />
-                </div>
+                <!-- Hidden Distance -->
+                <input type="hidden" id="distance" name="distance" value="{{ old('distance') }}" />
+
+                <!-- Hidden Distance -->
+                <input type="hidden" id="price" name="price" value="{{ old('price') }}" />
+
 
                 <!-- Date -->
                 <div>
@@ -57,43 +57,55 @@
         </form>
     </div>
 
-    <!-- Google Maps API Script -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}"></script>
-    <script>
-        document.getElementById('journey-form').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent the default form submission
+   <!-- Google Maps API Script -->
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&libraries=places&callback=initAutocomplete"></script>
+   <script>
+       function initAutocomplete() {
+           const originInput = document.getElementById('origin');
+           const destinationInput = document.getElementById('destination');
 
-            // Get the input values
-            const origin = document.getElementById('origin').value;
-            const destination = document.getElementById('destination').value;
+           new google.maps.places.Autocomplete(originInput);
+           new google.maps.places.Autocomplete(destinationInput);
+       }
 
-            // Function to get coordinates
-            const getCoordinates = async (address) => {
-                const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key={{ env('GOOGLE_MAPS_KEY') }}`);
-                const data = await response.json();
-                if (data.status === 'OK') {
-                    const location = data.results[0].geometry.location;
-                    return `${location.lat}, ${location.lng}`;
-                } else {
-                    console.error('Geocoding error:', data.status);
-                    return null;
-                }
-            };
+       document.addEventListener('DOMContentLoaded', function() {
+           document.getElementById('journey-form').addEventListener('submit', async function(event) {
+               event.preventDefault();
 
-            // Get the coordinates for origin and destination
-            const originCoordinates = await getCoordinates(origin);
-            const destinationCoordinates = await getCoordinates(destination);
+               const origin = document.getElementById('origin').value;
+               const destination = document.getElementById('destination').value;
 
-            if (originCoordinates && destinationCoordinates) {
-                // Set the coordinates in the hidden input fields
-                document.getElementById('origin_coordinates').value = originCoordinates;
-                document.getElementById('destination_coordinates').value = destinationCoordinates;
+               try {
+                   const response = await fetch('{{ route("get.journey.details") }}', {
+                       method: 'POST',
+                       headers: {
+                           'Content-Type': 'application/json',
+                           'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                       },
+                       body: JSON.stringify({ origin, destination })
+                   });
 
-                // Submit the form
-                event.target.submit();
-            } else {
-                alert('Unable to fetch coordinates. Please check the addresses.');
-            }
-        });
-    </script>
+                   if (!response.ok) {
+                       throw new Error('Network response was not ok');
+                   }
+
+                   const data = await response.json();
+
+                   if (data.success) {
+                       document.getElementById('origin_coordinates').value = data.originCoordinates;
+                       document.getElementById('destination_coordinates').value = data.destinationCoordinates;
+                       document.getElementById('distance').value = data.distance;
+                       document.getElementById('price').value = data.estimatedPrice;
+
+                       event.target.submit();
+                   } else {
+                       alert(data.message || 'Unable to process journey details. Please try again.');
+                   }
+               } catch (error) {
+                   console.error('Error:', error);
+                   alert('An error occurred. Please try again.');
+               }
+           });
+       });
+   </script>
 </x-app-layout>

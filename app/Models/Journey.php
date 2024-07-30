@@ -14,6 +14,7 @@ class Journey extends Model
         'origin_coordinates',
         'destination_coordinates',
         'price',
+        'distance',
         'departure_date',
         'departure_time'
     ];
@@ -25,15 +26,14 @@ class Journey extends Model
     ];
 
     // Relationship with User model (assuming a journey belongs to a driver)
-    public function driver()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // You might also want to add a relationship for passengers if applicable
-    public function passengers()
+    public function driver()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(Driver::class);
     }
 
     // Accessor to get full departure datetime
@@ -45,9 +45,5 @@ class Journey extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
-    }
-    public function bookings()
-    {
-        return $this->hasMany(Booking::class);
     }
 }

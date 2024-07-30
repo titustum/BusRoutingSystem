@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
             $table->string('company_name');
-            $table->string('license_number')->unique();
-            $table->string('vehicle_model') ;
-            $table->string('vehicle_registration_number')->unique();
+            $table->string('vehicle_type');
+            $table->string('vehicle_model');
+            $table->string('vehicle_number')->unique();
             $table->timestamps();
         });
     }

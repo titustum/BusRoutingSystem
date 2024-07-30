@@ -33,19 +33,31 @@
                         <span id="end-location">{{ $journey->destination }}</span>
                     </div>
                     <div class="detail-item">
-                        <strong>Driver:</strong>
-                        <span id="distance">{{ $journey->driver }}</span>
+                        <strong>Driver Name:</strong>
+                        <span id="distance">{{ $journey->user->name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Bus Type:</strong>
+                        <span id="distance">{{ $journey->driver->vehicle_type }}</span>
                     </div>
                     <div class="detail-item">
                         <strong>Bus Number:</strong>
-                        <span id="distance">{{ $journey->driver }}</span>
+                        <span id="distance">{{ $journey->driver->vehicle_number }}</span>
                     </div>
+                    <div class="detail-item">
+                        <strong>Estimated Price:</strong>
+                        <span id="distance">Ksh. {{ number_format($journey->price) }}</span>
+                    </div>
+                    {{-- <div class="detail-item">
+                        <strong>Bus Number:</strong>
+                        <span id="distance">{{ $journey->driver_details->company_name }}</span>
+                    </div> --}}
 
                     <div id="info"></div>
 
                     <div class="detail-item">
                         <strong>Distance:</strong>
-                        <span id="distance">{{ $distance }}</span>
+                        <span id="distance">{{ $journey->distance }} KM</span>
                     </div>
                     <div class="detail-item">
                         <strong>Estimated Time:</strong>

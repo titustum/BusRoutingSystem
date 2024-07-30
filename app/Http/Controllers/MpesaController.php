@@ -62,6 +62,7 @@ class MpesaController extends Controller
                 // STK push was successful, save pending payment
                 $payment = new Payment([
                     'user_id'=> Auth::user()->id,
+                    'passenger_id'=> Auth::user()->passenger_details->id,
                     'journey_id' => $request->journey_id,
                     'amount' => $request->amount,
                     'phone_number' => $request->phone_number,

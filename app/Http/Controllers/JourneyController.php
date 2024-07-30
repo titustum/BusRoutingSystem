@@ -30,18 +30,24 @@ class JourneyController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'origin' => 'required|string',
             'destination' => 'required|string',
             'origin_coordinates' => 'required|string',
             'destination_coordinates' => 'required|string',
             'price' => 'required|numeric',
+            'distance' => 'required|numeric', // Add this line
             'departure_date' => 'required|date',
-            'departure_time' => 'required',
+            'departure_time' => 'required|date_format:H:i',
         ]);
 
-        $journey = new Journey($validated);
-        $journey->user_id = auth()->id(); // Assuming the logged-in user is the driver
+        $user = auth()->user();
+        if (!$user->driver_details) {
+            return redirect()->back()->withErrors('Driver details not found for the logged-in user.');
+        }
+        $journey = new Journey($validatedData);
+        $journey->user_id = $user->id;
+        $journey->driver_id = $user->driver_details->id;
         $journey->save();
 
         return redirect()->route('journeys.index')->with('success', 'Journey created successfully.');
@@ -68,6 +74,8 @@ class JourneyController extends Controller
         $distance = $directionsData['routes'][0]['legs'][0]['distance']['text'] ?? 'Unknown';
         $duration = $directionsData['routes'][0]['legs'][0]['duration']['text'] ?? 'Unknown';
 
+        // $price = $distance * 50;
+
         // Extract the encoded polyline from the directions response
         $encodedPolyline = $directionsData['routes'][0]['overview_polyline']['points'] ?? '';
 
@@ -85,13 +93,19 @@ class JourneyController extends Controller
 
     public function search(Request $request)
     {
-        $journeys = Journey::where('origin', $request->origin)
-                            ->where('destination', $request->destination)
+        // Retrieve the input values and add wildcard characters for the LIKE query
+        $origin = '%' . $request->origin . '%';
+        $destination = '%' . $request->destination . '%';
+
+        $journeys = Journey::where('origin', 'like', $origin)
+                            ->where('destination', 'like', $destination)
                             ->get();
 
-        // dd($journeys);
+        // Debug output if needed
         return view('journey.search', compact('journeys'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -115,6 +129,81 @@ class JourneyController extends Controller
     public function destroy(Journey $journey)
     {
         //
+    }
+
+
+
+
+
+
+
+
+
+    public function getJourneyDetails(Request $request)
+    {
+        $origin = $request->input('origin');
+        $destination = $request->input('destination');
+
+        // Get coordinates
+        $originCoordinates = $this->getCoordinates($origin);
+        $destinationCoordinates = $this->getCoordinates($destination);
+
+        if (!$originCoordinates || !$destinationCoordinates) {
+            return response()->json(['success' => false, 'message' => 'Unable to fetch coordinates. Please check the addresses.']);
+        }
+
+        // Get distance
+        $distance = $this->getDistance($originCoordinates, $destinationCoordinates);
+
+        if ($distance === null) {
+            return response()->json(['success' => false, 'message' => 'Unable to fetch distance. Please check the addresses.']);
+        }
+
+        // Calculate estimated price
+        $estimatedPrice = round($distance * 50);
+
+        return response()->json([
+            'success' => true,
+            'originCoordinates' => $originCoordinates,
+            'destinationCoordinates' => $destinationCoordinates,
+            'distance' => $distance,
+            'estimatedPrice' => $estimatedPrice
+        ]);
+    }
+
+    private function getCoordinates($address)
+    {
+        $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'address' => $address,
+            'key' => env('GOOGLE_MAPS_KEY')
+        ]);
+
+        $data = $response->json();
+
+        if ($data['status'] === 'OK') {
+            $location = $data['results'][0]['geometry']['location'];
+            return $location['lat'] . ',' . $location['lng'];
+        }
+
+        return null;
+    }
+
+    private function getDistance($origin, $destination)
+    {
+        $response = Http::get('https://maps.googleapis.com/maps/api/directions/json', [
+            'origin' => $origin,
+            'destination' => $destination,
+            'key' => env('GOOGLE_MAPS_KEY')
+        ]);
+
+        $data = $response->json();
+
+        if ($data['status'] === 'OK') {
+            $distanceText = $data['routes'][0]['legs'][0]['distance']['text'];
+            return (float) str_replace([',', ' km'], '', $distanceText);
+        }
+
+        return null;
     }
 
 

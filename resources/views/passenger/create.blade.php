@@ -23,7 +23,7 @@
             <!-- Child Age -->
             <div class="mt-4">
                 <x-input-label for="child_age" :value="__('Child age')" />
-                <x-text-input id="child_age" class="block w-full mt-1" type="number" name="child_age"
+                <x-text-input id="child_age" class="block w-full mt-1" type="number" min="2" max="17" name="child_age"
                     :value="old('child_age')"
                     required autocomplete="child_age" />
                 <x-input-error :messages="$errors->get('child_age')" class="mt-2" />

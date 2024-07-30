@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\JourneyController;
@@ -28,7 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/driver/dashboard', function () { return view('driver.dashboard'); })->name('driver.dashboard');
 
     Route::resource('journeys', JourneyController::class);
-    Route::resource('bookings', BookingController::class);
     Route::resource('payments', PaymentController::class);
 
     Route::get('journey/pay/{id}', [PaymentController::class, 'pay'])->name('journey.pay');
@@ -49,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/view/passengers', [AdminController::class,'viewPassengers'])->name('admin.viewPassengers');
     Route::get('/admin/view/journeys', [AdminController::class,'viewJourneys'])->name('admin.viewJourneys');
     Route::get('/admin/view/payments', [AdminController::class, 'viewPayments'])->name('admin.viewPayments');
+
+    Route::post('/get-journey-details', [JourneyController::class, 'getJourneyDetails'])->name('get.journey.details');
 
 });
 

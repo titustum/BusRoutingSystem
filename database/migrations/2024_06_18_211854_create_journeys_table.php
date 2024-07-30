@@ -14,15 +14,18 @@ return new class extends Migration
         Schema::create('journeys', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('driver_id')->constrained('drivers');
             $table->string('origin');
             $table->string('destination');
             $table->string('origin_coordinates');
             $table->string('destination_coordinates');
-            $table->decimal('price', 8, 2);
+            $table->integer('price');
             $table->date('departure_date');
             $table->string('departure_time');
+            $table->string('distance');
             $table->timestamps();
         });
+
     }
 
     /**

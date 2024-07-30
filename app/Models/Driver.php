@@ -12,10 +12,9 @@ class Driver extends Model
     protected $fillable = [
         'user_id',
         'company_name',
-        'license_number',
-        'origin_coordinates',
+        'vehicle_number',
         'vehicle_model',
-        'vehicle_registration_number',
+        'vehicle_type',
     ];
 
 
@@ -26,6 +25,11 @@ class Driver extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function journeys()
+    {
+        return $this->hasMany(Journey::class);
     }
 }

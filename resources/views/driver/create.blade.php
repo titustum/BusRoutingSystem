@@ -20,36 +20,50 @@
                 <x-input-error :messages="$errors->get('company_name')" class="mt-2" />
             </div>
 
-            <!-- Licence Number -->
-            <div class="mt-4">
-                <x-input-label for="license_number" :value="__('Licence Number')" />
-                <x-text-input id="license_number" class="block w-full mt-1" type="text" name="license_number" :value="old('licence_number')" required autocomplete="licence_number" />
-                <x-input-error :messages="$errors->get('license_number')" class="mt-2" />
-            </div>
 
+            <!-- Bus Types -->
+            <div class="mt-4">
+                <x-input-label for="vehicle_type" :value="__('Bus Type/Capacity')" />
+
+                <select id="vehicle_type" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    name="vehicle_type" required>
+                    <option value="">Select..</option>
+                    <option value="14-24 Seater">14-24 Seater</option>
+                    <option value="20-29 Seater">20-29 Seater</option>
+                    <option value="30-39 Seater">30-39 Seater</option>
+                    <option value="40-49 Seater">40-49 Seater</option>
+                    <option value="50-59 Seater">50-59 Seater</option>
+                    <option value="60-69 Seater">60-69 Seater</option>
+                    <option value="Others">Others</option>
+                </select>
+
+                <x-input-error :messages="$errors->get('vehicle_type')" class="mt-2" />
+            </div>
 
             <!-- Model -->
             <div class="mt-4">
                 <x-input-label for="vehicle_model" :value="__('Bus Model')" />
-
-                <x-text-input id="vehicle_model" class="block w-full mt-1"
-                                type="text"
-                                name="vehicle_model"
-                                required autocomplete="vehicle_model" />
-
+                <select id="vehicle_model" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    name="vehicle_model" :value="old('vehicle_model')" required />
+                    <option value="">Select..</option>
+                    <option>Isuzu</option>
+                    <option>Scannia</option>
+                    <option>Toyota</option>
+                    <option>Others</option>
+                </select>
                 <x-input-error :messages="$errors->get('vehicle_model')" class="mt-2" />
             </div>
 
             <!-- Model -->
             <div class="mt-4">
-                <x-input-label for="vehicle_registration_number" :value="__('Bus Registration Number')" />
+                <x-input-label for="vehicle_number" :value="__('Bus Number Plate')" />
 
-                <x-text-input id="vehicle_registration_number" class="block w-full mt-1"
+                <x-text-input id="vehicle_number" class="block w-full mt-1"
                                 type="text"
-                                name="vehicle_registration_number"
-                                required autocomplete="vehicle_registration_number" />
+                                name="vehicle_number"
+                                required autocomplete="vehicle_number" />
 
-                <x-input-error :messages="$errors->get('vehicle_registration_number')" class="mt-2" />
+                <x-input-error :messages="$errors->get('vehicle_number')" class="mt-2" />
             </div>
 
 
