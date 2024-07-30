@@ -21,7 +21,7 @@
                 You have no journeys
 
                 @else
-                    @foreach (Auth::user()->journeys  as $journey)
+                    @foreach (Auth::user()->journeys as $journey)
 
                         <div class="grid grid-cols-3 gap-3 p-3 border rounded-md shadow">
                             <div>
