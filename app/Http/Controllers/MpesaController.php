@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Safaricom\Mpesa\Mpesa;
 use App\Models\Payment;
 use App\Models\Journey;
+use App\Models\Passenger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -60,9 +61,10 @@ class MpesaController extends Controller
 
             if(isset($result['ResponseCode']) && $result['ResponseCode'] == "0") {
                 // STK push was successful, save pending payment
+                $passenger = Passenger::where('user_id', Auth::id())->first();
                 $payment = new Payment([
                     'user_id'=> Auth::user()->id,
-                    'passenger_id'=> Auth::user()->passenger_details->id,
+                    'passenger_id'=> $passenger->id,
                     'journey_id' => $request->journey_id,
                     'amount' => $request->amount,
                     'phone_number' => $request->phone_number,
