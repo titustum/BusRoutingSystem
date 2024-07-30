@@ -21,9 +21,10 @@
 
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('build/assets/app-fO0wVZxQ.css') }}">
+        <script src="{{ asset('build/assets/app-Bg1aHGgo.js') }}" defer></script>
 
     </head>
     <body class="font-sans antialiased">

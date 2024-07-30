@@ -3,14 +3,13 @@
 
     <div class="flex flex-col w-full min-h-[70vh] p-4 my-16">
 
+            <div>
+                <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm text-black bg-gray-100 rounded-md"><i class="mr-2 fas fa-arrow-left"></i>Back</a>
+            </div>
+             <div class="text-orange-600 text-xl mt-4 text-center uppercase font-['Righteous']">
+                {{ $journey->origin }} <i class="text-green-600 fas fa-arrow-right"></i>  {{ $journey->destination }} JOURNEY
 
-        <div class="text-orange-600 pb-3 flex items-center justify-between border-b-2 border-orange-600 text-xl text-center uppercase font-['Righteous']">
-            <a href="{{ route('dashboard') }}" class="text-sm text-black"><i class="mr-1 fas fa-arrow-left"></i>Back</a>
-            {{ $journey->origin }} <i class="text-green-600 fas fa-arrow-right"></i>  {{ $journey->destination }} JOURNEY
-            <div></div>
-         </div>
-
-
+             </div>
 
              {{-- one journey --}}
 
