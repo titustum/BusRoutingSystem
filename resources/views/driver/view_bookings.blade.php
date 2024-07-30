@@ -3,9 +3,11 @@
 
     <div class="flex flex-col w-full h-screen p-4 my-16">
 
-             <div class="text-orange-600 pb-3 border-b-2 border-orange-600 text-xl text-center uppercase font-['Righteous']">
-                 JOURNEY | BOOKINGS
-             </div>
+        <div class="text-orange-600 pb-3 flex items-center justify-between border-b-2 border-orange-600 text-xl text-center uppercase font-['Righteous']">
+            <a href="{{ route('dashboard') }}" class="text-sm text-black"><i class="mr-1 fas fa-arrow-left"></i>Back</a>
+             JOURNEY | BOOKINGS
+            <div></div>
+         </div>
 
 
              <div class="grid gap-3 px-4 py-4 border-t border-orange-600">

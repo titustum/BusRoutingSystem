@@ -22,9 +22,8 @@ class MpesaController extends Controller
         ]);
 
         try {
-
-            $BusinessShortCode = env("MPESA_SHORTCODE"); // Sandbox shortcode
-            $LipaNaMpesaPasskey = env("MPESA_PASSKEY"); // Sandbox passkey
+            $BusinessShortCode = env("MPESA_SHORTCODE");
+            $LipaNaMpesaPasskey = env("MPESA_PASSKEY");
             $TransactionType = 'CustomerPayBillOnline';
             $Amount = round($request->amount);
             $PartyA = $request->phone_number;
@@ -39,7 +38,7 @@ class MpesaController extends Controller
             $Password = base64_encode($BusinessShortCode . $LipaNaMpesaPasskey . $Timestamp);
 
             $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-            $token = "K8AWzhFk5YynG6kaeYv3D5faJycS";
+            $token = $this->generateAccessToken(); // Generate a fresh token
 
             $response = Http::withToken($token)->post($url, [
                 'BusinessShortCode' => $BusinessShortCode,
@@ -82,6 +81,8 @@ class MpesaController extends Controller
         }
     }
 
+
+
     public function handleCallback(Request $request)
     {
         $callbackData = $request->all();
@@ -120,5 +121,27 @@ class MpesaController extends Controller
     {
         $payment = Payment::findOrFail($paymentId);
         return view('payments.payment-status', compact('payment'));
+    }
+
+
+    private function generateAccessToken()
+    {
+        $consumerKey = env('MPESA_CONSUMER_KEY');
+        $consumerSecret = env('MPESA_CONSUMER_SECRET');
+        $credentials = base64_encode($consumerKey . ":" . $consumerSecret);
+
+        $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Basic ' . $credentials,
+        ])->get($url);
+
+        $result = $response->json();
+
+        if(isset($result['access_token'])) {
+            return $result['access_token'];
+        }
+
+        throw new \Exception('Failed to generate access token');
     }
 }

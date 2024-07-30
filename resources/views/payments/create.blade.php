@@ -23,6 +23,15 @@
             <form action="{{ route('mpesa.initiatePayment') }}" method="POST">
                 @csrf
                 <input type="hidden" name="journey_id" value="{{ $journey->id }}">
+                <input type="hidden" name="amount" value="{{ $journey->price }}">
+
+                <div>
+                    Amount To Pay: <b>Ksh. {{ number_format($journey->price) }}</b>
+                </div>
+                <ul class="mt-3 text-sm list-inside list-['➢'] space-y-1 text-cyan-600">
+                    <li>Enter your M-PESA number and initiate the payment.</li>
+                    <li> When prompted to pay, enter MPESA password and  trasaction will be completed.</li>
+                </ul>
 
                 <!-- Phone -->
                 <div class="mt-4">
@@ -32,12 +41,6 @@
                     <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
                 </div>
 
-                <!-- Amount -->
-                <div class="mt-4">
-                    <x-input-label for="amount" :value="__('Amount to Pay')" />
-                    <x-text-input id="amount" class="block w-full mt-1" type="number" name="amount" value="{{ $journey->price }}" readonly />
-                    <x-input-error :messages="$errors->get('amount')" class="mt-2" />
-                </div>
 
                 <button type="submit" class="float-right px-6 py-3 mt-8 text-white bg-orange-600 rounded-md">Initiate M-Pesa Payment</button>
             </form>

@@ -49,9 +49,10 @@ class RegisteredUserController extends Controller
 
         if (Auth::check() && strcasecmp(Auth::user()->role, 'DRIVER') === 0) {
             return view('driver.create');
+        }elseif(Auth::check() && strcasecmp(Auth::user()->role, 'PASSENGER') === 0){
+            return view('passenger.create');
+        }else{
+            return redirect(route('dashboard', absolute: false));
         }
-        return view('passenger.create');
-
-        // return redirect(route('dashboard', absolute: false));
     }
 }

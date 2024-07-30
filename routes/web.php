@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DriverController;
@@ -43,6 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/driver/store', [DriverController::class, 'storeDetails'])->name('driver.store');
     Route::get('/driver/bookings', [DriverController::class, 'viewBookings'])->name('driver.view.bookings');
     Route::get('/driver/booking/{id}', [DriverController::class, 'showBooking'])->name('driver.show.booking');
+
+    Route::get('/admin/view/drivers', [AdminController::class, 'viewDrivers'])->name('admin.viewDrivers');
+    Route::get('/admin/view/passengers', [AdminController::class,'viewPassengers'])->name('admin.viewPassengers');
+    Route::get('/admin/view/journeys', [AdminController::class,'viewJourneys'])->name('admin.viewJourneys');
+    Route::get('/admin/view/payments', [AdminController::class, 'viewPayments'])->name('admin.viewPayments');
 
 });
 

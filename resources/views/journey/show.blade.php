@@ -3,10 +3,14 @@
 
     <div class="flex flex-col w-full min-h-[70vh] p-4 my-16">
 
-             <div class="text-orange-600 text-xl text-center uppercase font-['Righteous']">
-                {{ $journey->origin }} <i class="text-green-600 fas fa-arrow-right"></i>  {{ $journey->destination }} JOURNEY
 
-             </div>
+        <div class="text-orange-600 pb-3 flex items-center justify-between border-b-2 border-orange-600 text-xl text-center uppercase font-['Righteous']">
+            <a href="{{ route('dashboard') }}" class="text-sm text-black"><i class="mr-1 fas fa-arrow-left"></i>Back</a>
+            {{ $journey->origin }} <i class="text-green-600 fas fa-arrow-right"></i>  {{ $journey->destination }} JOURNEY
+            <div></div>
+         </div>
+
+
 
              {{-- one journey --}}
 
@@ -56,8 +60,9 @@
 
 
 
-             <div class="mt-auto">
-                <a href="{{ route('journey.pay', $journey->id) }}" class="w-full px-6 py-3 text-white bg-green-600 rounded-md">Pay: KSh.{{ number_format($journey->price) }} </a>
+             <div class="flex justify-between mt-auto">
+                <a href="{{ route('dashboard') }}" class="px-6 py-3 bg-gray-400 rounded-md">Back</a>
+                <a href="{{ route('journey.pay', $journey->id) }}" class="block px-6 py-3 text-white bg-orange-600 rounded-md">Book @ KSh. {{ number_format($journey->price) }} </a>
              </div>
 
      </div>

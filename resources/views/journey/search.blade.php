@@ -1,11 +1,12 @@
 <x-app-layout header="Driver">
 
 
-    <div class="h-screen w-full my-16 flex flex-col p-4">
+    <div class="flex flex-col w-full h-screen p-4 my-16">
 
-             <div class="text-orange-600 text-xl text-center uppercase font-['Righteous']">
+             <div class="text-orange-600 pb-3 flex items-center justify-between border-b-2 border-orange-600 text-xl text-center uppercase font-['Righteous']">
+                <a href="{{ route('dashboard') }}" class="text-sm text-black"><i class="mr-1 fas fa-arrow-left"></i>Back</a>
                 {{ $journeys->count() }} | AVAILABLE JOURNEYS
-
+                <div></div>
              </div>
 
              {{-- You recently added jourmeys --}}
@@ -17,11 +18,11 @@
 
                      @foreach ($journeys as $journey)
 
-                     <div class="border shadow p-3 rounded-md grid gap-3 grid-cols-3">
+                     <div class="grid grid-cols-3 gap-3 p-3 border rounded-md shadow">
                         <div>
 
                             <div class="flex flex-col text-center justify-center h-[90%] w-full bg-gray-200 rounded-md">
-                                <i class="fas fa-bus text-orange-600"></i>
+                                <i class="text-orange-600 fas fa-bus"></i>
                                 <h1 class="font-bold">Bus Kenya</h1>
                             </div>
                         </div>
@@ -34,7 +35,7 @@
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <input type="hidden" name="journey_id" value="{{ $journey->id }}">
                                 <button type="submit"
-                                    class="w-full block text-center mx-auto py-2 px-2 bg-black rounded-md text-white hover:bg-orange-600 focus:bg-orange-600">
+                                    class="block w-full px-2 py-2 mx-auto text-center text-white bg-black rounded-md hover:bg-orange-600 focus:bg-orange-600">
                                 Book Now
                                 </button>
                             </form>
