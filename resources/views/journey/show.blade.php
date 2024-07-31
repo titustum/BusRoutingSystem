@@ -48,10 +48,6 @@
                         <strong>Estimated Price:</strong>
                         <span id="distance">Ksh. {{ number_format($journey->price) }}</span>
                     </div>
-                    {{-- <div class="detail-item">
-                        <strong>Bus Number:</strong>
-                        <span id="distance">{{ $journey->driver_details->company_name }}</span>
-                    </div> --}}
 
                     <div id="info"></div>
 

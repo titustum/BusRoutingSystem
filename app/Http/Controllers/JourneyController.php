@@ -74,7 +74,7 @@ class JourneyController extends Controller
         $distance = $directionsData['routes'][0]['legs'][0]['distance']['text'] ?? 'Unknown';
         $duration = $directionsData['routes'][0]['legs'][0]['duration']['text'] ?? 'Unknown';
 
-        // $price = $distance * 50;
+        //
 
         // Extract the encoded polyline from the directions response
         $encodedPolyline = $directionsData['routes'][0]['overview_polyline']['points'] ?? '';
